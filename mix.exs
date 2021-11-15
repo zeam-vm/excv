@@ -11,7 +11,8 @@ defmodule Excv.MixProject do
       elixir: "~> 1.12",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
-      docs: docs()
+      docs: docs(),
+      compilers: [:elixir_make] ++ Mix.compilers
     ]
   end
 
