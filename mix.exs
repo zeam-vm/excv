@@ -12,7 +12,9 @@ defmodule Excv.MixProject do
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       docs: docs(),
-      compilers: [:elixir_make] ++ Mix.compilers
+      compilers: [:elixir_make] ++ Mix.compilers(),
+      make_clean: ["clean"],
+      package: package()
     ]
   end
 
@@ -38,6 +40,24 @@ defmodule Excv.MixProject do
       main: "Excv",
       source_ref: "v#{@version}",
       source_url: @source_url
+    ]
+  end
+
+  defp package do
+    [
+      links: %{
+        "GitHub" => @source_url
+      },
+      licenses: ["Apache-2.0"],
+      source_url: @source_url,
+      files: [
+        "lib",
+        "LICENSE",
+        "mix.exs",
+        "README.md",
+        "c_src",
+        "Makefile"
+      ]
     ]
   end
 end
