@@ -26,7 +26,8 @@ defmodule Excv.MixProject do
   defp deps do
     [
       {:ex_doc, "~> 0.24", only: :dev, runtime: false},
-      {:dialyxir, "~> 1.1", only: [:dev], runtime: false}
+      {:dialyxir, "~> 1.1", only: [:dev], runtime: false},
+      {:git_hooks, "~> 0.6.4", only: [:dev], runtime: false}
     ]
   end
 
