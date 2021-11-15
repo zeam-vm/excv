@@ -18,8 +18,7 @@ if Mix.env() == :dev do
         verbose: false,
         tasks: [
           {:cmd, "mix dialyzer"},
-          {:cmd, "mix test --color"},
-          {:cmd, "echo 'succuess!"}
+          {:cmd, "mix test --color"}
         ]
       ]
     ]
