@@ -1,6 +1,6 @@
 # Excv
 
-**TODO: Add description**
+Excv is a bridge between OpenCV and Nx.
 
 ## Installation
 
