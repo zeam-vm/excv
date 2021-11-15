@@ -4,20 +4,21 @@ Excv is a bridge between OpenCV and Nx.
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `excv` to your list of dependencies in `mix.exs`:
+In order to use `Excv`, you will need Elixir installed. Then create an Elixir project via the `mix` build tool:
+
+```
+$ mix new my_app
+```
+
+Then you can add `Excv` as dependency in your `mix.exs`. At the moment you will have to use a Git dependency while we work on our first release:
 
 ```elixir
 def deps do
   [
-    {:excv, "~> 0.1.0"}
+    {:excv, "~> 0.1.0-dev", github: "zeam-vm/excv", branch: "main"}
   ]
 end
 ```
-
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at [https://hexdocs.pm/excv](https://hexdocs.pm/excv).
 
 ## License
 
