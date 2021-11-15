@@ -1,6 +1,6 @@
 defmodule Excv do
   @moduledoc """
-  Documentation for `Excv`.
+  Excv is a bridge between OpenCV and Nx.
   """
 
   @doc """
