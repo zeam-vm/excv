@@ -7,7 +7,7 @@ EXCV_SO = $(PRIV_DIR)/libexcv.so
 SRC_DIR = c_src/excv
 SUB_DIRS = $(SRC_DIR)/imgcodecs
 
-EXCV_C_SRC = $(SRC_DIR)/libexcv.c
+EXCV_C_SRC = $(SRC_DIR)/libexcv.c $(SRC_DIR)/parse_size_data_type.c
 EXCV_CXX_SRC = $(SRC_DIR)/imgcodecs/imwrite.cpp $(SRC_DIR)/imgcodecs/imread.cpp
 EXCV_C_OBJ = $(EXCV_C_SRC:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
 EXCV_CXX_OBJ = $(EXCV_CXX_SRC:$(SRC_DIR)/%.cpp=$(BUILD_DIR)/%.o)
@@ -77,13 +77,13 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c $(BUILD_DIR)/%.d
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp $(BUILD_DIR)/%.d
 	@echo "CC $(notdir $@)"
-	$(CXX) -c $(CXXFLAGS) $(CV_CFLAGS) -o $@ $<
+	$(CXX) -c $(ERL_CFLAGS) $(CXXFLAGS) $(CV_CFLAGS) -o $@ $<
 
 $(BUILD_DIR)/%.d: $(SRC_DIR)/%.c
 	$(CC) $(ERL_CFLAGS) $(CFLAGS) $< -MM -MP -MF $@
 
 $(BUILD_DIR)/%.d: $(SRC_DIR)/%.cpp
-	$(CC) $(CXXFLAGS) $(CV_CFLAGS) $< -MM -MP -MF $@
+	$(CC) $(ERL_CFLAGS) $(CXXFLAGS) $(CV_CFLAGS) $< -MM -MP -MF $@
 
 include $(shell ls $(EXCV_C_DEPS) 2>/dev/null)
 include $(shell ls $(EXCV_CXX_DEPS) 2>/dev/null)
