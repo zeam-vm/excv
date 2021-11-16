@@ -14,7 +14,8 @@ bool excv_imwrite_u8(
     uint64_t x,
     uint64_t y,
     uint_fast16_t depth,
-    uint8_t *data
+    uint8_t *data,
+    const char **error_message
 );
 
 #ifdef __cplusplus

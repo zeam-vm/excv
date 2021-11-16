@@ -14,22 +14,28 @@ extern "C" bool excv_imwrite_u8(
     uint64_t x,
     uint64_t y,
     uint_fast16_t depth,
-    uint8_t *data
+    uint8_t *data,
+    const char **error_message
 )
 {
-    std::string file_name = file;
-    cv::Mat inMat = cv::Mat(y, x, CV_8UC(depth), data);
-    cv::Mat outMat;
-    switch(depth) {
-        case 3:
-        cv::cvtColor(inMat, outMat, cv::COLOR_RGB2BGR);
-        break;
-        case 4:
-        cv::cvtColor(inMat, outMat, cv::COLOR_RGBA2BGRA);
-        break;
-        default:
+    try {
+        std::string file_name = file;
+        cv::Mat inMat = cv::Mat(y, x, CV_8UC(depth), data);
+        cv::Mat outMat;
+        switch(depth) {
+            case 3:
+            cv::cvtColor(inMat, outMat, cv::COLOR_RGB2BGR);
+            break;
+            case 4:
+            cv::cvtColor(inMat, outMat, cv::COLOR_RGBA2BGRA);
+            break;
+            default:
+            return false;
+        }
+        cv::imwrite(file_name, outMat);
+    } catch(const cv::Exception& ex) {
+        *error_message = ex.what();
         return false;
     }
-    cv::imwrite(file_name, outMat);
     return true;
 }

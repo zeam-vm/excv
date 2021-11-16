@@ -42,7 +42,7 @@ defmodule Excv.Imgcodecs do
   before saving.
   Or, use the universal `File` functions to save the image to XML or YAML format.
   """
-  @spec imwrite(Nx.Tensor.t() | list(), Path.t(), list()) :: :ok | :error
+  @spec imwrite(Nx.Tensor.t() | list(), Path.t(), list()) :: :ok | :error | {:error, String.t()}
   def imwrite(img, file, options \\ [])
 
   def imwrite(img, file, options) when is_struct(img, Nx.Tensor) do

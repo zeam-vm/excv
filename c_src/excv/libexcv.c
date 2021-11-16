@@ -40,10 +40,17 @@ static ERL_NIF_TERM im_write_nif(ErlNifEnv *env, int argc, const ERL_NIF_TERM ar
         }
 
         if(__builtin_expect(strncmp(type, "u", type_size) == 0 && bit == 8, true)) {
-            if(__builtin_expect(excv_imwrite_u8(path_binary.size, (char *)path_binary.data, (uint64_t) x, (uint64_t) y, (uint_fast16_t) depth, (uint8_t *)in_data.data), true)) {
+            const char *error_message = "";
+            if(__builtin_expect(excv_imwrite_u8(path_binary.size, (char *)path_binary.data, (uint64_t) x, (uint64_t) y, (uint_fast16_t) depth, (uint8_t *)in_data.data, &error_message), true)) {
                 result = enif_make_atom(env, "ok");
             } else {
-                result = enif_make_atom(env, "error");
+                ErlNifBinary reason;
+                if(__builtin_expect(!(enif_alloc_binary(strnlen(error_message, 256), &reason) && reason.size > 0), false)) {
+                    result = enif_make_atom(env, "error");
+                } else {
+                    memcpy(reason.data, error_message, reason.size);
+                    result = enif_make_tuple2(env, enif_make_atom(env, "error"), enif_make_binary(env, &reason));
+                }
             }
         } else {
             result = enif_make_atom(env, "error");
