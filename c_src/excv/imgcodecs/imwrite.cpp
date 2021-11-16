@@ -7,7 +7,6 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <stdlib.h>
-#include <stdio.h>
 
 extern "C" bool excv_imwrite_u8(
     size_t file_size,

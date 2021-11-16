@@ -10,10 +10,17 @@ static ERL_NIF_TERM im_write_nif(ErlNifEnv *env, int argc, const ERL_NIF_TERM ar
         return enif_make_badarg(env);
     }
 
-    ErlNifBinary path_binary;
-    if(__builtin_expect(!enif_inspect_binary(env, argv[1], &path_binary), false)) {
+    ErlNifBinary path_binary_tmp;
+    if(__builtin_expect(!enif_inspect_binary(env, argv[1], &path_binary_tmp), false)) {
         return enif_make_badarg(env);
     }
+
+    ErlNifBinary path_binary;
+    if(__builtin_expect(!enif_alloc_binary(path_binary_tmp.size + 1, &path_binary), false)) {
+        return enif_make_badarg(env);
+    }
+    memcpy(path_binary.data, path_binary_tmp.data, path_binary_tmp.size);
+    path_binary.data[path_binary_tmp.size] = 0;
 
     ERL_NIF_TERM result;
 
