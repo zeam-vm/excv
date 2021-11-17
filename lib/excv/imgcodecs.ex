@@ -165,7 +165,6 @@ defmodule Excv.Imgcodecs do
   end
 
   defp parse_result_im_read({shape, type, data}) do
-    t = Nx.iota(shape, type: type)
-    %{t | data: %{t.data | state: data}}
+    Nx.from_binary(data, type) |> Nx.reshape(shape)
   end
 end
