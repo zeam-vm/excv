@@ -41,6 +41,12 @@ defmodule Excv.Imgcodecs do
   If the format, depth or channel order is different, use `Excv.Nx.convertTo/4` and `Excv.Imgproc.cvtColor/4` to convert it
   before saving.
   Or, use the universal `File` functions to save the image to XML or YAML format.
+
+  ## Parameters
+
+  `img`: (Nx.Tensor or list of Nx.Tensor) image or images to be saved.
+  `file`: Path of the file.
+  `options`: (Keyword list) Format-specific parameters. (To be implemented)
   """
   @spec imwrite(Nx.Tensor.t() | list(), Path.t(), list()) :: :ok | :error | {:error, String.t()}
   def imwrite(img, file, options \\ [])
