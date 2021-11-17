@@ -96,8 +96,7 @@ defmodule Excv.Imgcodecs do
 
   @doc false
   @spec im_write_nif(list() | tuple(), binary(), list()) :: :ok | :error
-  def im_write_nif(size_data_type, _path, _options) do
-    IO.inspect(size_data_type)
+  def im_write_nif(_size_data_type, _path, _options) do
     :erlang.nif_error(:nif_not_loaded)
   end
 end
