@@ -1,6 +1,7 @@
 #ifndef EXCV_IMWRITE_H
 #define EXCV_IMWRITE_H
 
+#include <stdbool.h>
 #include <stdint.h>
 #include <stdlib.h>
 
