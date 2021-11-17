@@ -5,6 +5,9 @@ defmodule Excv.Imgcodecs do
   Imgcodecs correspond to "opencv2/imgcodecs.hpp".
   """
 
+  @typep im_read_result ::
+           {{pos_integer(), pos_integer(), pos_integer()}, {atom(), pos_integer()}, binary()}
+
   @on_load :load_nif
 
   @doc false
@@ -98,5 +101,71 @@ defmodule Excv.Imgcodecs do
   @spec im_write_nif(list() | tuple(), binary(), list()) :: :ok | :error
   def im_write_nif(_size_data_type, _path, _options) do
     :erlang.nif_error(:nif_not_loaded)
+  end
+
+  @doc """
+  Loads an image from a file.
+
+  The function `imread` loads an image from the specified file and returns a tuple of `:ok` and it.
+  If the image cannot be read (because of missing file, improper permissions, unsupported or invalid format),
+  the function returns a tuple of `:error` and reason if available.
+
+  Currently, the following file formats are supported:
+
+  * Windows bitmaps - `*.bmp`, `*.dib` (always supported)
+  * JPEG files - `*.jpeg`, `*.jpg`, `*.jpe` (see the *Note* section)
+  * JPEG 2000 files - `*.jp2` (see the Note section)
+  * Portable Network Graphics - `*.png` (see the *Note* section)
+  * WebP - `*.webp` (see the *Note* section)
+  * Portable image format - `*.pbm`, `*.pgm`, `*.ppm` `*.pxm`, `*.pnm` (always supported)
+  * Sun rasters - `*.sr`, `*.ras` (always supported)
+  * TIFF files - `*.tiff`, `*.tif` (see the *Note* section)
+  * OpenEXR Image files - `*.exr` (see the *Note* section)
+  * Radiance HDR - `*.hdr`, `*.pic` (always supported)
+  * Raster and Vector geospatial data supported by GDAL (see the *Note* section)
+
+  ## Note
+
+  * The function determines the type of an image by the content, not by the file extension.
+  * In the case of color images, the decoded images will have the channels stored in **R G B** order instead of **B G R** order in OpenCV.
+  * When using `grayscale: true`, the codec's internal grayscale conversion will be used, if available. Results may differ to the output of `Excv.Imgproc.cvtColor/4`.
+  * On Microsoft Windows\* OS and macOS\*, the codecs shipped with an OpenCV image (`libjpeg`, `libpng`, `libtiff`, and `libjasper`) are used by default.
+    So, Excv can always read JPEGs, PNGs, and TIFFs.
+    On macOS, there is also an option to use native macOS image readers.
+    But beware that currently these native image loaders give images with different pixel values because of the color management embedded into macOS.
+  * On Linux\*, BSD flavors and other Unix-like open-source operating systems, Excv looks for codecs supplied with an OS image.
+    Install the relevant packages (do not forget the development files, for example, "libjpeg-dev", in Debian\* and Ubuntu\*)
+    to get the codec support or turn on the `OPENCV_BUILD_3RDPARTY_LIBS` flag in CMake when building OpenCV.
+  * In the case you set `WITH_GDAL` flag to true in CMake and `load_GDAL: true` to load the image,
+    then the `GDAL` driver will be used in order to decode the image, supporting the following formats: `Raster`, `Vector`.
+  * If EXIF information is embedded in the image file, the EXIF orientation will be taken into account and thus the image will be rotated
+    accordingly except if the flags `ignore_orientation: true` or `unchanged: true` are passed.
+  * By default number of pixels must be less than $2^30$. Limit can be set using system variable `OPENCV_IO_MAX_IMAGE_PIXELS`
+
+  ## Parameters
+
+  * `file`: Path of the file to be loaded.
+  * `options`: (To be implemented)
+  """
+  @spec imread(Path.t(), Keyword.t()) ::
+          {:ok, Nx.Tensor.t() | list()} | {:error, String.t()}
+  def imread(file, options \\ []) do
+    case im_read_nif(Path.absname(file), options) do
+      {:ok, result} -> {:ok, parse_result_im_read(result)}
+      :error -> {:error, :no_reason}
+      {:error, reason} -> {:error, reason}
+    end
+  end
+
+  @doc false
+  @spec im_read_nif(Path.t(), Keyword.t()) ::
+          {:ok, im_read_result() | list(im_read_result())} | :error | {:error, String.t()}
+  def im_read_nif(_path, _options) do
+    :erlang.nif_error(:nif_not_loaded)
+  end
+
+  defp parse_result_im_read({shape, type, data}) do
+    t = Nx.iota(shape, type: type)
+    %{t | data: %{t.data | state: data}}
   end
 end

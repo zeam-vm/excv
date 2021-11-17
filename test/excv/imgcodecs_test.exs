@@ -76,4 +76,33 @@ defmodule Excv.ImgcodecsTest do
       end
     end
   end
+
+  describe "imread and imwrite" do
+    test "png random image" do
+      img_expected = Nx.random_uniform({256, 256, 3}, 0, 256, type: {:u, 8})
+      file = "/tmp/test_random_256_256.png"
+      result = Excv.Imgcodecs.imwrite(img_expected, file)
+
+      assert result == :ok
+      assert File.exists?(file) == true
+
+      {file_str, file_exit} = System.cmd("file", [file])
+
+      assert file_exit == 0
+      assert String.match?(file_str, ~r/PNG image data/) == true
+
+      img_actual =
+        case Excv.Imgcodecs.imread(file) do
+          {:ok, img} -> img
+          _ -> :error
+        end
+
+      assert img_expected == img_actual
+
+      case File.rm(file) do
+        :ok -> :ok
+        _ -> :ok
+      end
+    end
+  end
 end

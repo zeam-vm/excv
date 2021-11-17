@@ -7,7 +7,7 @@ EXCV_SO = $(PRIV_DIR)/libexcv.so
 SRC_DIR = c_src/excv
 SUB_DIRS = $(SRC_DIR)/imgcodecs
 
-EXCV_C_SRC = $(SRC_DIR)/libexcv.c $(SRC_DIR)/parse_size_data_type.c
+EXCV_C_SRC = $(SRC_DIR)/libexcv.c $(SRC_DIR)/parse_size_data_type.c $(SRC_DIR)/error.c
 EXCV_CXX_SRC = $(SRC_DIR)/imgcodecs/imwrite.cpp $(SRC_DIR)/imgcodecs/imread.cpp
 EXCV_C_OBJ = $(EXCV_C_SRC:$(SRC_DIR)/%.c=$(BUILD_DIR)/%.o)
 EXCV_CXX_OBJ = $(EXCV_CXX_SRC:$(SRC_DIR)/%.cpp=$(BUILD_DIR)/%.o)
