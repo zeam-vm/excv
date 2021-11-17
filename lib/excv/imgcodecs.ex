@@ -49,7 +49,8 @@ defmodule Excv.Imgcodecs do
   * `file`(String): Path of the file.
   * `options`(Keyword list): Format-specific parameters. (To be implemented)
   """
-  @spec imwrite(Nx.Tensor.t() | list(), Path.t(), list()) :: :ok | :error | {:error, String.t()}
+  @spec imwrite(Nx.Tensor.t() | list(), Path.t(), Keyword.t()) ::
+          :ok | :error | {:error, String.t()}
   def imwrite(img, file, options \\ [])
 
   def imwrite(img, file, options) when is_struct(img, Nx.Tensor) do
