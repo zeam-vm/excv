@@ -44,9 +44,9 @@ defmodule Excv.Imgcodecs do
 
   ## Parameters
 
-  `img`: (Nx.Tensor or list of Nx.Tensor) image or images to be saved.
-  `file`: Path of the file.
-  `options`: (Keyword list) Format-specific parameters. (To be implemented)
+  * `img`: (`Nx.Tensor` or list of `Nx.Tensor`) image or images to be saved.
+  * `file`: Path of the file.
+  * `options`: (Keyword list) Format-specific parameters. (To be implemented)
   """
   @spec imwrite(Nx.Tensor.t() | list(), Path.t(), list()) :: :ok | :error | {:error, String.t()}
   def imwrite(img, file, options \\ [])
