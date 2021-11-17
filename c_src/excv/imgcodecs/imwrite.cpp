@@ -33,6 +33,7 @@ extern "C" bool excv_imwrite_u8(
             return false;
         }
         cv::imwrite(file_name, outMat);
+        outMat.release();
     } catch(const cv::Exception& ex) {
         *error_message = ex.what();
         return false;
