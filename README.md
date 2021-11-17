@@ -1,10 +1,11 @@
 # Excv
 
-Excv is a bridge between OpenCV and Nx.
+Excv (Elixir Computer Vision) is a bridge between OpenCV and Nx.
 
 ## Installation
 
-In order to use `Excv`, you will need Elixir installed. Then create an Elixir project via the `mix` build tool:
+In order to use `Excv`, you will need Elixir, OpenCV, and `pkg-config` installed. 
+Then create an Elixir project via the `mix` build tool:
 
 ```
 $ mix new my_app
