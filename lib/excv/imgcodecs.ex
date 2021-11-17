@@ -7,6 +7,7 @@ defmodule Excv.Imgcodecs do
 
   @on_load :load_nif
 
+  @doc false
   def load_nif do
     nif_file = '#{Application.app_dir(:excv, "priv/libexcv")}'
 
@@ -44,9 +45,9 @@ defmodule Excv.Imgcodecs do
 
   ## Parameters
 
-  `img`: (Nx.Tensor or list of Nx.Tensor) image or images to be saved.
-  `file`: Path of the file.
-  `options`: (Keyword list) Format-specific parameters. (To be implemented)
+  * `img`(`Nx.Tensor` or list of `Nx.Tensor`): image or images to be saved.
+  * `file`(String): Path of the file.
+  * `options`(Keyword list): Format-specific parameters. (To be implemented)
   """
   @spec imwrite(Nx.Tensor.t() | list(), Path.t(), list()) :: :ok | :error | {:error, String.t()}
   def imwrite(img, file, options \\ [])
@@ -92,6 +93,7 @@ defmodule Excv.Imgcodecs do
     )
   end
 
+  @doc false
   @spec im_write_nif(list() | tuple(), binary(), list()) :: :ok | :error
   def im_write_nif(size_data_type, _path, _options) do
     IO.inspect(size_data_type)
