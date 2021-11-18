@@ -54,6 +54,7 @@ ifeq ($(shell uname -s),Linux)
 	ifeq ($(shell which opencv_read_cuda),)
 		ifeq ($(shell opencv_read_cuda),YES)
 			CXXFLAGS += -D EXIST_CUDA
+			LDFLAGS += -lopencv_gpu
 		endif
 	endif
 endif
