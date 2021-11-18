@@ -58,7 +58,7 @@ ifeq ($(shell uname -s),Linux)
 	endif
 endif
 
-LDFLAGS += -lstdc++ -lopencv_core
+LDFLAGS += -lstdc++ -lopencv_core -lm
 CFLAGS += -std=c11 -O3 -Wall -Wextra -Wno-unused-function -Wno-unused-parameter -Wno-missing-field-initializers
 CXXFLAGS ?= -std=c++11 -Ofast -Wall -Wextra -Wno-unused-function -Wno-unused-parameter -Wno-missing-field-initializers
 
