@@ -54,12 +54,11 @@ ifeq ($(shell uname -s),Linux)
 	ifeq ($(shell which opencv_read_cuda),)
 		ifeq ($(shell opencv_read_cuda),YES)
 			CXXFLAGS += -D EXIST_CUDA
-			LDFLAGS += -lopencv_gpu
 		endif
 	endif
 endif
 
-LDFLAGS += -lstdc++ -lopencv_core -lopencv_highgui -lm
+LDFLAGS += -lstdc++ -lm
 CFLAGS += -std=c11 -O3 -Wall -Wextra -Wno-unused-function -Wno-unused-parameter -Wno-missing-field-initializers
 CXXFLAGS ?= -std=c++11 -Ofast -Wall -Wextra -Wno-unused-function -Wno-unused-parameter -Wno-missing-field-initializers
 
