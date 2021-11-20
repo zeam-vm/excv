@@ -78,7 +78,7 @@ defmodule Excv.Imgcodecs do
     {y, x, d} = Nx.shape(img)
 
     im_write_nif(
-      {{x, y}, img.data.state, {type, d}},
+      {{x, y}, Nx.to_binary(img), {type, d}},
       path,
       options
     )
