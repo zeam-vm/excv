@@ -76,7 +76,7 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c $(BUILD_DIR)/%.d
 	$(CC) -c $(ERL_CFLAGS) $(CFLAGS) -o $@ $<
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp $(BUILD_DIR)/%.d
-	@echo "CC $(notdir $@)"
+	@echo "C++ $(notdir $@)"
 	$(CXX) -c $(ERL_CFLAGS) $(CXXFLAGS) $(CV_CFLAGS) -o $@ $<
 
 $(BUILD_DIR)/%.d: $(SRC_DIR)/%.c
