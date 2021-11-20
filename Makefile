@@ -69,7 +69,7 @@ $(PRIV_DIR) $(BUILD_DIR) $(BUILD_SUB_DIRS):
 
 $(EXCV_SO): $(EXCV_C_OBJ) $(EXCV_CXX_OBJ)
 	@echo "LD $(notdir $@)"
-	$(CC) -o $@ $(ERL_LDFLAGS) $(LDFLAGS) $(CV_LDFLAGS) $^
+	$(CXX) -o $@ $^ $(ERL_LDFLAGS) $(LDFLAGS) $(CV_LDFLAGS) 
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c $(BUILD_DIR)/%.d
 	@echo "CC $(notdir $@)"
