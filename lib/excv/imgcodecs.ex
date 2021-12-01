@@ -150,10 +150,14 @@ defmodule Excv.Imgcodecs do
   @spec imread(Path.t(), Keyword.t()) ::
           {:ok, Nx.Tensor.t() | list()} | {:error, String.t()}
   def imread(file, options \\ []) do
-    case im_read_nif(Path.absname(file), options) do
-      {:ok, result} -> {:ok, parse_result_im_read(result)}
-      :error -> {:error, :no_reason}
-      {:error, reason} -> {:error, reason}
+    if File.exists?(file) do
+      case im_read_nif(Path.absname(file), options) do
+        {:ok, result} -> {:ok, parse_result_im_read(result)}
+        :error -> {:error, :no_reason}
+        {:error, reason} -> {:error, reason}
+      end
+    else
+      {:error, "File #{file} does not exist."}
     end
   end
 
