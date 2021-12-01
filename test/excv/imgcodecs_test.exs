@@ -105,4 +105,18 @@ defmodule Excv.ImgcodecsTest do
       end
     end
   end
+
+  describe "imread" do
+    test "non-existent file read" do
+      file =
+        Stream.unfold(0, fn n -> {n, n + 1} end)
+        |> Stream.map(&"tmp/nonexistent_file_#{&1}.jpg")
+        |> Stream.filter(&(!File.exists?(&1)))
+        |> Stream.take(1)
+        |> Enum.to_list()
+        |> hd()
+
+      assert Excv.Imgcodecs.imread(file) == {:error, "File #{file} does not exist."}
+    end
+  end
 end
